@@ -1,6 +1,157 @@
 @elearning2_HostAddress = http://localhost:5052
 
-GET {{elearning2_HostAddress}}/weatherforecast/
-Accept: application/json
+### Register Admin User
+POST {{elearning2_HostAddress}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123",
+  "role": "Admin"
+}
+
+###
+
+### Login Admin
+POST {{elearning2_HostAddress}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+###
+
+### Register Student User
+POST {{elearning2_HostAddress}}/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "username": "student",
+  "password": "student123",
+  "role": "Student"
+}
+
+###
+
+### Login Student
+POST {{elearning2_HostAddress}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "student",
+  "password": "student123"
+}
+
+###
+
+### Refresh Token
+POST {{elearning2_HostAddress}}/api/v1/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "replace_with_actual_refresh_token"
+}
+
+###
+
+### Get All Students (Admin Only)
+GET {{elearning2_HostAddress}}/api/v1/student
+Authorization: Bearer replace_with_token
+
+###
+
+### Create Student (Admin Only)
+POST {{elearning2_HostAddress}}/api/v1/student
+Authorization: Bearer replace_with_token
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "dateOfBirth": "2000-01-01"
+}
+
+###
+
+### Get Student by ID
+GET {{elearning2_HostAddress}}/api/v1/student/replace_with_student_id
+Authorization: Bearer replace_with_token
+
+###
+
+### Update Student
+PUT {{elearning2_HostAddress}}/api/v1/student/replace_with_student_id
+Authorization: Bearer replace_with_token
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "dateOfBirth": "2000-01-01"
+}
+
+###
+
+### Delete Student (Admin Only)
+DELETE {{elearning2_HostAddress}}/api/v1/student/replace_with_student_id
+Authorization: Bearer replace_with_token
+
+###
+
+### Get All Lessons
+GET {{elearning2_HostAddress}}/api/v1/lesson?page=1&limit=10
+Authorization: Bearer replace_with_token
+
+###
+
+### Get Lesson by ID
+GET {{elearning2_HostAddress}}/api/v1/lesson/replace_with_lesson_id
+Authorization: Bearer replace_with_token
+
+###
+
+### Get Lessons by Course ID
+GET {{elearning2_HostAddress}}/api/v1/lesson/course/replace_with_course_id?page=1&limit=10
+Authorization: Bearer replace_with_token
+
+###
+
+### Search Lesson by Title
+GET {{elearning2_HostAddress}}/api/v1/lesson/search?title=replace_with_title
+Authorization: Bearer replace_with_token
+
+###
+
+### Create Lesson (Admin Only)
+POST {{elearning2_HostAddress}}/api/v1/lesson
+Authorization: Bearer replace_with_token
+Content-Type: application/json
+
+{
+  "title": "Sample Lesson",
+  "content": "Sample Content",
+  "courseId": "replace_with_course_id"
+}
+
+###
+
+### Update Lesson (Admin Only)
+PUT {{elearning2_HostAddress}}/api/v1/lesson/replace_with_lesson_id
+Authorization: Bearer replace_with_token
+Content-Type: application/json
+
+{
+  "title": "Updated Lesson",
+  "content": "Updated Content",
+  "courseId": "replace_with_course_id"
+}
+
+###
+
+### Delete Lesson (Admin Only)
+DELETE {{elearning2_HostAddress}}/api/v1/lesson/replace_with_lesson_id
+Authorization: Bearer replace_with_token
 
 ###

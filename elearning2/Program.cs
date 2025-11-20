@@ -1,72 +1,23 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using elearning2.Data;
 using elearning2.Repositories;
 using elearning2.Services;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using DotNetEnv;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.RateLimiting;
-
-
 
 var builder = WebApplication.CreateBuilder(args);
-Env.Load();
 
-var port = Environment.GetEnvironmentVariable("PORT");
-if (!string.IsNullOrEmpty(port))
-{
-    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
-}
+// Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("AllowAll", p => p
-        .AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod());
-});
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
-var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
-var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
-byte[] keyBytes;
-if (!string.IsNullOrEmpty(jwtKey))
-{
-    keyBytes = Convert.FromBase64String(jwtKey);
-}
-else
-{
-    throw new InvalidOperationException("JWT key is missing or empty.");
-}
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
-builder.Services
-    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(o =>
-    {
-        o.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey=true,
-            ValidIssuer = jwtIssuer,
-            ValidAudience = jwtAudience,
-            IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
-            RoleClaimType = ClaimTypes.Role,
-            ClockSkew = TimeSpan.Zero
-        };
-    });
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("AdminOnly", p => p.RequireRole("Admin"));
-});
-var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") ?? builder.Configuration.GetConnectionString("Default");
-builder.Services.AddDbContext<AppDbContext>(opt =>
-opt.UseNpgsql(connectionString));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<ILessonRepository, LessonRepository>();
@@ -74,39 +25,43 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ILessonService, LessonService>();
 
-
-builder.Services.AddRateLimiter(options =>
+builder.Services.AddAuthentication(options =>
 {
-    options.AddFixedWindowLimiter("fixed", opt =>
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        opt.Window = TimeSpan.FromSeconds(10);
-        opt.PermitLimit = 5;
-    });
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "ElearningApi",
+        ValidAudience = "ElearningClient",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ce5fb510003c8be3287d1fc2b8c713ff86dd71f680b029f2ad6bf28cf183ad30"))
+    };
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
 });
 
 var app = builder.Build();
 
-
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-if (builder.Environment.IsDevelopment())
-{
-    app.UseSwaggerUI(options => 
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-        options.RoutePrefix = "swagger";
-    });
-}
-
 app.UseHttpsRedirection();
-app.UseCors("AllowAll");
-app.UseRateLimiter();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
+
 app.Run();

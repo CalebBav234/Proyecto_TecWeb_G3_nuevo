@@ -1,0 +1,2 @@
+- [x] Add [Required] to UserId and FullName in CreateStudentDto.cs
+- [x] Populate UpdateStudentDto.cs with optional fields

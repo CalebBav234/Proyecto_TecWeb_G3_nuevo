@@ -13,14 +13,20 @@ namespace elearning2.Data
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
 
+        public DbSet<Certificate> Certificates { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            
             modelBuilder.Entity<Student>()
                 .HasOne(s => s.User)
                 .WithOne()
                 .HasForeignKey<Student>(s => s.UserId);
 
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.Certificate)
+                .WithOne()
+                .HasForeignKey<Certificate>(c => c.StudentId);
 
             modelBuilder.Entity<Course>()
                 .HasOne(c => c.Teacher)
@@ -42,5 +48,5 @@ namespace elearning2.Data
                 .WithMany(c => c.Enrollments)
                 .HasForeignKey(e => e.CourseId);
         }
-    }
+        }
 }

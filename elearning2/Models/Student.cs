@@ -11,4 +11,6 @@ public class Student
     public string? AvatarUrl { get; set; }
 
     public User User { get; set; } = null!;
+
+    public Certificate? Certificate { get; set; }
 }

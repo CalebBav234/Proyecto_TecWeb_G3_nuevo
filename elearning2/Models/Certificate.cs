@@ -1,3 +1,5 @@
+using elearning2.Models;
+
 public class Certificate
 {
     public Guid Id { get; set; }
@@ -6,4 +8,6 @@ public class Certificate
     public string Title { get; set; }
 
     public string Description { get; set; }
+
+    public Student? Student { get; set; }
 }

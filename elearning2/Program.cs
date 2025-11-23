@@ -88,10 +88,11 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<ILessonRepository, LessonRepository>();
+builder.Services.AddScoped<ICertificateRepository, CertificateRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ILessonService, LessonService>();
-
+builder.Services.AddScoped<ICertificateService, CertificateService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

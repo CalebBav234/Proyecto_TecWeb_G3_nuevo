@@ -1,1 +1,1 @@
-web: dotnet elearning2.dll
+web: ./start.sh

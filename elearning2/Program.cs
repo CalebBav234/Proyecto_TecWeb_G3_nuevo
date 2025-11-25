@@ -8,6 +8,7 @@ using DotNetEnv;
 using elearning2.Data;
 using elearning2.Repositories;
 using elearning2.Services;
+using Npgsql;
 
 //dotnet add package DotNetEnv
 
@@ -71,7 +72,28 @@ builder.Services.AddAuthorization(options =>
 });
 
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
+if (!string.IsNullOrEmpty(connectionString) &&
+    (connectionString.StartsWith("postgres://") || connectionString.StartsWith("postgresql://")))
+{
+    var uri = new Uri(connectionString);
 
+    var userInfo = uri.UserInfo.Split(':', 2);
+    var user = Uri.UnescapeDataString(userInfo[0]);
+    var pass = userInfo.Length > 1 ? Uri.UnescapeDataString(userInfo[1]) : "";
+
+    var builderCs = new NpgsqlConnectionStringBuilder
+    {
+        Host = uri.Host,
+        Port = uri.Port,
+        Username = user,
+        Password = pass,
+        Database = uri.AbsolutePath.Trim('/'),
+        SslMode = SslMode.Require,
+        TrustServerCertificate = true
+    };
+
+    connectionString = builderCs.ConnectionString;
+}
 if (string.IsNullOrEmpty(connectionString))
 {
     // fallback to appsettings or env vars

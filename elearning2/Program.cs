@@ -19,11 +19,15 @@ using Npgsql;
 var builder = WebApplication.CreateBuilder(args);
 Env.Load();
 
-var port = Environment.GetEnvironmentVariable("PORT");
-if (!string.IsNullOrEmpty(port))
+var portStr = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+if (!int.TryParse(portStr, out var port))
 {
-    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+    port = 8080;
 }
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(port);
+});
 Console.WriteLine($"App will listen on port: {port}");
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -97,7 +101,8 @@ if (!string.IsNullOrEmpty(connectionString) &&
         Username = user,
         Password = pass,
         Database = uri.AbsolutePath.Trim('/'),
-        SslMode = SslMode.Require
+        SslMode = SslMode.Require,
+        TrustServerCertificate = true
     };
 
     connectionString = builderCs.ConnectionString;
@@ -114,6 +119,7 @@ if (string.IsNullOrEmpty(connectionString))
 
     connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username={dbUser};Password={dbPass}";
 }
+Console.WriteLine($"Using connection string (masked): Host={new Uri(connectionString).Host}; Database={new NpgsqlConnectionStringBuilder(connectionString).Database}; ...");
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseNpgsql(connectionString));

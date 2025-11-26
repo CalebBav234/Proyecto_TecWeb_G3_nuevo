@@ -128,12 +128,11 @@ builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<ICertificateService, CertificateService>();
 
 var app = builder.Build();
-
+app.UseSwagger();
+app.UseSwaggerUI();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
     app.UseHttpsRedirection();
 }
 using (var scope = app.Services.CreateScope())

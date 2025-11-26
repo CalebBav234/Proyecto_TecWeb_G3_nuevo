@@ -119,7 +119,7 @@ if (string.IsNullOrEmpty(connectionString))
 
     connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username={dbUser};Password={dbPass}";
 }
-Console.WriteLine($"Using connection string (masked): Host={new Uri(connectionString).Host}; Database={new NpgsqlConnectionStringBuilder(connectionString).Database}; ...");
+
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseNpgsql(connectionString));

@@ -14,5 +14,3 @@ public class Student
 
     public Certificate? Certificate { get; set; }
 }
-
-//push

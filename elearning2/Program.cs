@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -9,6 +8,7 @@ using elearning2.Data;
 using elearning2.Repositories;
 using elearning2.Services;
 using Npgsql;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 //dotnet add package DotNetEnv
 
@@ -66,6 +66,7 @@ builder.Services
             ClockSkew = TimeSpan.Zero
         };
     });
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOnly", p => p.RequireRole("Admin"));
@@ -94,6 +95,7 @@ if (!string.IsNullOrEmpty(connectionString) &&
 
     connectionString = builderCs.ConnectionString;
 }
+
 if (string.IsNullOrEmpty(connectionString))
 {
     // fallback to appsettings or env vars
@@ -105,8 +107,10 @@ if (string.IsNullOrEmpty(connectionString))
 
     connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username={dbUser};Password={dbPass}";
 }
+
 builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseNpgsql(connectionString));
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<ILessonRepository, LessonRepository>();
@@ -115,6 +119,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<ICertificateService, CertificateService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

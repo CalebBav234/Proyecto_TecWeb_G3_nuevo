@@ -34,5 +34,31 @@ namespace elearning2.Controllers
             }
         }
 
+
+        [HttpGet("{id:guid}")]
+        [Authorize]
+        public async Task<IActionResult> GetEnrollment(Guid id)
+        {
+            try
+            {
+                var enrollment = await _service.GetOne(id);
+                if (enrollment == null)
+                {
+                    return NotFound(new { Message = "Enrollment not found." });
+                }
+
+                return Ok(enrollment);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Message = "An error occurred while retrieving the enrollment.",
+                    Details = ex.Message
+                });
+            }
+        }
+
+
     }
 }

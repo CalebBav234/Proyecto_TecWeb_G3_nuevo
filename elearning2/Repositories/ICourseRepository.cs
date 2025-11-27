@@ -10,5 +10,6 @@ namespace elearning2.Repositories
         Task UpdateCourse(Course course);
         Task DeleteCourse(Course course);
         Task<Course?> GetByTitle(string title);
+        Task<IEnumerable<Course>> GetBYTeacher(Guid teacherId);
     }
 }

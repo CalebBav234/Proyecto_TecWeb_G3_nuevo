@@ -52,9 +52,16 @@ namespace elearning2.Services
             return course;
         }
 
-        Task<Course?> ICourseService.UpdateCourse(UpdateCourseDto dto, Guid courseId)
+        public async Task<Course?> UpdateCourse(UpdateCourseDto dto, Guid courseId)
         {
-            throw new NotImplementedException();
+            Course? course = await GetById(courseId);
+            if (course == null) throw new Exception("Course not found");
+
+            course.Title = dto.Title;
+            course.Description = dto.Description;
+            course.TeacherId = dto.TeacherId.Value;
+            await _repo.UpdateCourse(course);
+            return course;
         }
     }
 }

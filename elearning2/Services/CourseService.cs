@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using elearning2.Models;
+using elearning2.Models.DTOS;
 
 namespace elearning2.Services
 {
@@ -11,11 +12,6 @@ namespace elearning2.Services
         {
             _repo = repo;
         }
-        public Task<Course> AddCourse(Course course)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<bool> DeleteCourse(Guid courseId)
         {
             throw new NotImplementedException();
@@ -41,7 +37,12 @@ namespace elearning2.Services
             throw new NotImplementedException();
         }
 
-        public Task<Course?> UpdateCourse(Guid courseId, Course updatedCourse)
+        Task<Course> ICourseService.AddCourse(CreateCourseDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Course?> ICourseService.UpdateCourse(UpdateCourseDto dto, Guid courseId)
         {
             throw new NotImplementedException();
         }

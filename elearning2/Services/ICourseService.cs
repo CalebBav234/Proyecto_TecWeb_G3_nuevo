@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using elearning2.Models;
+using elearning2.Models.DTOS;
 
 namespace elearning2.Services
 {
@@ -9,8 +10,8 @@ namespace elearning2.Services
     {
         Task<IEnumerable<Course>> GetAllCourses();
         Task<Course?> GetById(Guid courseId);
-        Task<Course> AddCourse(Course course);
-        Task<Course?> UpdateCourse(Guid courseId, Course updatedCourse);
+        Task<Course> AddCourse(CreateCourseDto dto);
+        Task<Course?> UpdateCourse(UpdateCourseDto dto, Guid courseId);
         Task<bool> DeleteCourse(Guid courseId);
         Task<IEnumerable<Course>> GetByTeacher(Guid teacherId);
         Task<Course?> GetByTitle(string title);

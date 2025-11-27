@@ -35,6 +35,23 @@ namespace elearning2.Controllers
         }
 
 
+        [HttpGet("title/{title}")]
+        public async Task<IActionResult> GetByTitle(string title)
+        {
+            var course =  await _courseService.GetByTitle(title);
+            if (course == null) return NotFound();
+            return Ok(course);
+        }
+
+
+        [HttpGet("teacher/{teacherId}")]
+        public async Task<IActionResult> GetByTeacher(Guid teacherId)
+        {
+            var courses = await _courseService.GetByTeacher(teacherId);
+            return Ok(courses);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> AddCourse([FromBody] CreateCourseDto dto)
         {

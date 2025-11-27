@@ -33,7 +33,7 @@ namespace elearning2.Repositories
             return await _db.Courses.FirstOrDefaultAsync(c => c.Id == courseId);
         }
 
-        public Task<IEnumerable<Course>> GetBYTeacher(Guid teacherId)
+        public Task<IEnumerable<Course>> GetByTeacher(Guid teacherId)
         {
             throw new NotImplementedException();
         }

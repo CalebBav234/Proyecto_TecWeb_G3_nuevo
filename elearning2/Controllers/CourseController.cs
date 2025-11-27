@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using elearning2.Services;
 using elearning2.Models;
 using elearning2.Models.DTOS;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace elearning2.Controllers
 {
@@ -43,6 +44,21 @@ namespace elearning2.Controllers
         }
 
 
-        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCourse(Guid id, [FromBody] UpdateCourseDto dto)
+        {
+            if (!ModelState.IsValid) return ValidationProblem(ModelState);
+            var course = await _courseService.UpdateCourse(dto, id);
+            return CreatedAtAction(nameof(GetById), new { id = course.Id }, course);
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCourse(Guid id)
+        {
+            if (!ModelState.IsValid) return ValidationProblem(ModelState);
+            await _courseService.DeleteCourse(id);
+            return NoContent();
+        }
     }
 }

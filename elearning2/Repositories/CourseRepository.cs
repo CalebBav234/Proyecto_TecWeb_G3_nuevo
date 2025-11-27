@@ -11,9 +11,10 @@ namespace elearning2.Repositories
         {
             _db = db;
         }
-        public Task AddCourse(Course course)
+        public async Task AddCourse(Course course)
         {
-            throw new NotImplementedException();
+            await _db.Courses.AddAsync(course);
+            await _db.SaveChangesAsync();
         }
 
         public Task DeleteCourse(Course course)

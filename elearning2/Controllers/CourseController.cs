@@ -29,7 +29,7 @@ namespace elearning2.Controllers
         {
             var course = await _courseService.GetById(id);
             if (course == null) return NotFound();
-            
+            return Ok(course);
         }
     }
 }

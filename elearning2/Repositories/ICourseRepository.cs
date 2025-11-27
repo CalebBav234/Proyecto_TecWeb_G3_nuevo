@@ -9,5 +9,6 @@ namespace elearning2.Repositories
         Task AddCourse(Course course);
         Task UpdateCourse(Course course);
         Task DeleteCourse(Course course);
+        Task<Course?> GetByTitle(string title);
     }
 }

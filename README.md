@@ -1,57 +1,49 @@
-E-Learning API
+# E-Learning API
 
 This is an ASP.NET Core Web API for an e-learning platform, providing endpoints for authentication, student management, and lesson management.
 
-What is this project?
+## What is this project?
 
-This API models a simple e-learning platform called Educocha.
+This API models a simple e-learning platform called **Educocha**.
 
 The idea is to simulate a real scenario where:
 
-Users register and log in.
-
-An Admin manages:
-
-Students (student profiles linked to users)
-
-Courses and their Lessons
-
-Enrollments (which student is assigned to which course)
-
-Certificates for students
-
-Authenticated users can access data according to their role.
+- Users register and log in.
+- An **Admin** manages:
+  - **Students** (student profiles linked to users)
+  - **Courses** and their **Lessons**
+  - **Enrollments** (which student is assigned to which course)
+  - **Certificates** for students
+- Authenticated users can access data according to their role.
 
 We chose this domain because online courses are a common real-world service (similar to Udemy/Coursera) and it lets us practice:
 
-1–N, N–M and 1–1 relationships in the database.
+- 1–N, N–M and 1–1 relationships in the database.
+- Authentication with JWT and authorization with roles.
+- A more realistic flow than a single CRUD.
 
-Authentication with JWT and authorization with roles.
+---
 
-A more realistic flow than a single CRUD.
+## Installation
 
-Installation
-Prerequisites
+### Prerequisites
+- Docker
+- Docker Compose
 
-Docker
-
-Docker Compose
-
-Steps
-
-Clone the repository:
-git clone https://github.com/CalebBav234/Proyecto_TecWeb_G3_nuevo.git
-
-cd Proyecto_TecWeb_G3_nuevo/elearning2
-
+### Steps
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/CalebBav234/Proyecto_TecWeb_G3_nuevo.git
+   cd Proyecto_TecWeb_G3_nuevo/elearning2
 Run the application using Docker Compose:
-docker-compose up --build
 
+bash
+Copiar código
+docker-compose up --build
 The API will be available at http://localhost:5052.
 
 Endpoints
 Authentication
-
 POST /api/v1/auth/register
 
 Description: Registers a new user.
@@ -67,13 +59,14 @@ password (string): User password
 role (string): Admin or User
 
 Body example:
-{
-"email": "user@example.com
-",
-"password": "MyStrongPass123!",
-"role": "User"
-}
 
+json
+Copiar código
+{
+  "email": "user@example.com",
+  "password": "MyStrongPass123!",
+  "role": "User"
+}
 POST /api/v1/auth/login
 
 Description: Logs in a user and returns a token.
@@ -87,12 +80,13 @@ email (string): User email
 password (string): User password
 
 Body example:
-{
-"email": "user@example.com
-",
-"password": "MyStrongPass123!"
-}
 
+json
+Copiar código
+{
+  "email": "user@example.com",
+  "password": "MyStrongPass123!"
+}
 POST /api/v1/auth/refresh
 
 Description: Refreshes the authentication token.
@@ -100,9 +94,7 @@ Description: Refreshes the authentication token.
 Authorization: None
 
 Students
-
 GET /api/v1/student
-
 
 Description: Retrieves all students with pagination.
 
@@ -143,14 +135,15 @@ Bio (string): Short bio
 AvatarUrl (string): Avatar image URL
 
 Body example:
-{
-"userId": "2c0fbd5a-6b4b-4b83-9b9b-123456789abc",
-"fullName": "John Doe",
-"bio": "Backend developer",
-"avatarUrl": "https://example.com/avatar.jpg
-"
-}
 
+json
+Copiar código
+{
+  "userId": "2c0fbd5a-6b4b-4b83-9b9b-123456789abc",
+  "fullName": "John Doe",
+  "bio": "Backend developer",
+  "avatarUrl": "https://example.com/avatar.jpg"
+}
 PUT /api/v1/student/{id}
 
 Description: Updates an existing student.
@@ -166,13 +159,14 @@ Bio (string): Updated bio
 AvatarUrl (string): Updated avatar URL
 
 Body example:
-{
-"fullName": "John Doe Updated",
-"bio": "Full stack developer",
-"avatarUrl": "https://example.com/new-avatar.jpg
-"
-}
 
+json
+Copiar código
+{
+  "fullName": "John Doe Updated",
+  "bio": "Full stack developer",
+  "avatarUrl": "https://example.com/new-avatar.jpg"
+}
 DELETE /api/v1/student/{id}
 
 Description: Deletes a student.
@@ -180,7 +174,6 @@ Description: Deletes a student.
 Authorization: Admin only
 
 Lessons
-
 GET /api/v1/lesson
 
 Description: Retrieves all lessons with pagination.
@@ -220,12 +213,14 @@ Title (string): Lesson title
 Content (string): Lesson content
 
 Body example:
-{
-"courseId": "54f1fd3c-2ac0-4ee4-8f76-123456789abc",
-"title": "Introduction to REST APIs",
-"content": "Lesson content goes here..."
-}
 
+json
+Copiar código
+{
+  "courseId": "54f1fd3c-2ac0-4ee4-8f76-123456789abc",
+  "title": "Introduction to REST APIs",
+  "content": "Lesson content goes here..."
+}
 PUT /api/v1/lesson/{id}
 
 Description: Updates an existing lesson.
@@ -239,11 +234,13 @@ Title (string): Updated title
 Content (string): Updated content
 
 Body example:
-{
-"title": "REST APIs – Updated",
-"content": "Updated lesson content..."
-}
 
+json
+Copiar código
+{
+  "title": "REST APIs – Updated",
+  "content": "Updated lesson content..."
+}
 DELETE /api/v1/lesson/{id}
 
 Description: Deletes a lesson.
@@ -251,7 +248,6 @@ Description: Deletes a lesson.
 Authorization: Admin only
 
 Certificates
-
 GET /api/v1/certificate
 
 Description: Retrieves all certificates with pagination.
@@ -301,12 +297,14 @@ Title (string): Title of the certificate
 Description (string): Description of the certificate
 
 Body example:
-{
-"studentId": "5e62a0a4-2be1-4a79-8bcb-123456789abc",
-"title": "ASP.NET Core Fundamentals",
-"description": "Certificate for completing the ASP.NET Core course."
-}
 
+json
+Copiar código
+{
+  "studentId": "5e62a0a4-2be1-4a79-8bcb-123456789abc",
+  "title": "ASP.NET Core Fundamentals",
+  "description": "Certificate for completing the ASP.NET Core course."
+}
 PUT /api/v1/certificate/{id}
 
 Description: Updates an existing certificate by its ID. Fields can be selectively updated.
@@ -322,12 +320,14 @@ Title (string, optional): Updated title
 Description (string, optional): Updated description
 
 Body example:
-{
-"studentId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-"title": "ASP.NET Core Advanced",
-"description": "Updated description for the certificate."
-}
 
+json
+Copiar código
+{
+  "studentId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+  "title": "ASP.NET Core Advanced",
+  "description": "Updated description for the certificate."
+}
 DELETE /api/v1/certificate/{id}
 
 Description: Deletes a certificate by its ID.
@@ -335,7 +335,6 @@ Description: Deletes a certificate by its ID.
 Authorization: Admin only
 
 Enrollments
-
 GET /api/v1/enrollment
 
 Description: Retrieves all enrollments with pagination.
@@ -379,11 +378,13 @@ StudentId (GUID): ID of the student to enroll
 CourseId (GUID): ID of the course
 
 Body example:
-{
-"studentId": "5e62a0a4-2be1-4a79-8bcb-123456789abc",
-"courseId": "54f1fd3c-2ac0-4ee4-8f76-123456789abc"
-}
 
+json
+Copiar código
+{
+  "studentId": "5e62a0a4-2be1-4a79-8bcb-123456789abc",
+  "courseId": "54f1fd3c-2ac0-4ee4-8f76-123456789abc"
+}
 PUT /api/v1/enrollment/{id}
 
 Description: Updates an existing enrollment.
@@ -397,11 +398,13 @@ StudentId (GUID, optional): New student ID (if changed)
 CourseId (GUID, optional): New course ID (if changed)
 
 Body example:
-{
-"studentId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
-"courseId": "ffffffff-1111-2222-3333-444444444444"
-}
 
+json
+Copiar código
+{
+  "studentId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+  "courseId": "ffffffff-1111-2222-3333-444444444444"
+}
 DELETE /api/v1/enrollment/{id}
 
 Description: Deletes an enrollment by its ID.
@@ -409,7 +412,6 @@ Description: Deletes an enrollment by its ID.
 Authorization: Admin only
 
 ER diagram (summary)
-
 Main entities and fields:
 
 Student
@@ -468,18 +470,21 @@ Title (string)
 
 Description (string)
 
-(Optionally you can add the ER image in the repo and reference it like:)
+If you add the ER image to the repo, you can reference it like:
 
+markdown
+Copiar código
+![ER Diagram](docs/er-diagram.png)
 Authentication, authorization and roles
-
 The API uses JWT tokens for authentication.
 
 After calling /api/v1/auth/login, the response includes a token.
 
 The token must be sent in the Authorization header:
 
+http
+Copiar código
 Authorization: Bearer <token>
-
 Roles:
 
 Admin
@@ -490,12 +495,14 @@ Authorization attributes in controllers:
 
 Endpoints for admins only:
 
+csharp
+Copiar código
 [Authorize(Policy = "AdminOnly")]
-
 Endpoints for any authenticated user:
 
+csharp
+Copiar código
 [Authorize]
-
 In general:
 
 Admin can create, update and delete Students, Lessons, Certificates and Enrollments.
@@ -503,7 +510,6 @@ Admin can create, update and delete Students, Lessons, Certificates and Enrollme
 User can access read-only endpoints (GET) for lessons, certificates, enrollments, etc.
 
 Swagger and Postman
-
 Swagger UI is available at: http://localhost:5052/swagger
 It documents all endpoints and allows testing them directly in the browser, including sending the JWT token.
 

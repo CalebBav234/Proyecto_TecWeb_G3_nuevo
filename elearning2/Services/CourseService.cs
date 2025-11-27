@@ -21,9 +21,9 @@ namespace elearning2.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Course>> GetAllCourses()
+        public async Task<IEnumerable<Course>> GetAllCourses()
         {
-            throw new NotImplementedException();
+            return await _repo.GetAllCourses();
         }
 
         public Task<Course?> GetById(Guid courseId)

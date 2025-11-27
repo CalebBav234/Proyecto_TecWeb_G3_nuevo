@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("elearning2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5fa1dab0801f79b87459e2287333be7ba0b10a0e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ce5bc989b21111482a8a00a5d29577cbc7640113")]
 [assembly: System.Reflection.AssemblyProductAttribute("elearning2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("elearning2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -349,13 +349,6 @@ Main entities and fields:
   - `Title` (string)
   - `Description` (string)
 
-If you add the ER image to the repo, you can reference it like:
-
-```markdown
-![ER Diagram](docs/er-diagram.png)
-```
-
----
 
 ## Authentication, authorization and roles
 
@@ -398,3 +391,4 @@ In general:
   - Auth requests (register, login, refresh)
   - CRUD operations for Students, Lessons, Certificates and Enrollments
   - Environment variables for base URL and token
+

@@ -2,24 +2,27 @@ using System;
 using System.Collections.Generic;
 using elearning2.Models;
 using elearning2.Models.DTOS;
+using elearning2.Repositories;
 
 namespace elearning2.Services
 {
     public class CourseService : ICourseService
     {
-        private readonly ICourseService _repo;
-        public CourseService(ICourseService repo)
+        private readonly ICourseRepository _repo;
+        public CourseService(ICourseRepository repo)
         {
             _repo = repo;
         }
-        public Task<bool> DeleteCourse(Guid courseId)
+        public async Task DeleteCourse(Guid courseId)
         {
-            throw new NotImplementedException();
+            Course? course = (await GetAllCourses()).FirstOrDefault(c => c.Id == courseId);
+            if (course == null) return;
+            await _repo.DeleteCourse(course);
         }
 
         public async Task<IEnumerable<Course>> GetAllCourses()
         {
-            return await _repo.GetAllCourses();
+            return await _repo.GetAll();
         }
 
         public async Task<Course?> GetById(Guid courseId)

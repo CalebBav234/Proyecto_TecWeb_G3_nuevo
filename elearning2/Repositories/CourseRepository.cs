@@ -43,9 +43,10 @@ namespace elearning2.Repositories
             return await _db.Courses.FirstOrDefaultAsync(c => c.Title == title);
         }
 
-        public Task UpdateCourse(Course course)
+        public async Task UpdateCourse(Course course)
         {
-            throw new NotImplementedException();
+            _db.Courses.Update(course);
+            await _db.SaveChangesAsync();
         }
     }
 }

@@ -6,7 +6,9 @@ This is an ASP.NET Core Web API for an e-learning platform, providing endpoints 
 
 This API models a simple e-learning platform called **Educocha**.
 
-The idea is to simulate a real scenario where:
+The goal of this project is to simulate a realistic online learning service where a university or training center can manage students, courses, lessons and certificates in a structured way. Instead of building an abstract CRUD, we wanted a scenario that looks close to something that could actually be used in production.
+
+In this context:
 
 - Users register and log in.
 - An **Admin** manages:
@@ -16,14 +18,14 @@ The idea is to simulate a real scenario where:
   - **Certificates** for students
 - Authenticated users can access data according to their role.
 
-We chose this domain because online courses are a common real-world service (similar to Udemy/Coursera) and it lets us practice:
+We chose this domain because online courses are a common real-world service (similar to Udemy or Coursera), and it covers several typical needs of a modern web backend:
 
-- 1–N, N–M and 1–1 relationships in the database.
-- Authentication with JWT and authorization with roles.
-- A more realistic flow than a single CRUD.
+- Managing relationships between entities (1–N, N–M and 1–1) in a relational database.
+- Handling authentication with JWT and role-based authorization.
+- Exposing a clean REST API that could be consumed by a web or mobile frontend.
+- Modeling a business flow that is richer than a simple “create, read, update, delete” over a single table.
 
----
-
+From the point of view of the **Web Technologies** course, Educocha lets us demonstrate not only that we can implement endpoints, but also that we understand how to design entities, secure the API, and document it so another team could build a frontend on top of it.
 ## Installation
 
 ### Prerequisites
@@ -391,4 +393,5 @@ In general:
   - Auth requests (register, login, refresh)
   - CRUD operations for Students, Lessons, Certificates and Enrollments
   - Environment variables for base URL and token
+
 

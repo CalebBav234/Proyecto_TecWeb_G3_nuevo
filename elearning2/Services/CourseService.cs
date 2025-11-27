@@ -49,6 +49,7 @@ namespace elearning2.Services
                 Description = dto.Description,
                 TeacherId = dto.TeacherId
             };
+            await _repo.AddCourse(course);
             return course;
         }
 
@@ -57,9 +58,9 @@ namespace elearning2.Services
             Course? course = await GetById(courseId);
             if (course == null) throw new Exception("Course not found");
 
-            course.Title = dto.Title;
-            course.Description = dto.Description;
-            course.TeacherId = dto.TeacherId.Value;
+            if (dto.Title != null) course.Title = dto.Title;
+            if (dto.Description != null) course.Description = dto.Description;
+            if (dto.TeacherId.HasValue) course.TeacherId = dto.TeacherId.Value;
             await _repo.UpdateCourse(course);
             return course;
         }

@@ -30,9 +30,9 @@ namespace elearning2.Services
             return await _repo.GetById(courseId);
         }
 
-        public Task<IEnumerable<Course>> GetByTeacher(Guid teacherId)
+        public async Task<IEnumerable<Course>> GetByTeacher(Guid teacherId)
         {
-            throw new NotImplementedException();
+            return await _repo.GetByTeacher(teacherId);
         }
 
         public Task<Course?> GetByTitle(string title)

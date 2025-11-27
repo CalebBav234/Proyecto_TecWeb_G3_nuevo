@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using elearning2.Services;
 using elearning2.Models;
+using elearning2.Models.DTOS;
 
 namespace elearning2.Controllers
 {
@@ -31,5 +32,17 @@ namespace elearning2.Controllers
             if (course == null) return NotFound();
             return Ok(course);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddCourse([FromBody] CreateCourseDto dto)
+        {
+            if(!ModelState.IsValid) return ValidationProblem(ModelState);
+            var createdCourse = await _courseService.AddCourse(dto);
+            return CreatedAtAction(nameof(GetById), new { id = createdCourse.Id }, createdCourse);
+        }
+
+
+        
     }
 }

@@ -35,9 +35,9 @@ namespace elearning2.Services
             return await _repo.GetByTeacher(teacherId);
         }
 
-        public Task<Course?> GetByTitle(string title)
+        public async Task<Course?> GetByTitle(string title)
         {
-            throw new NotImplementedException();
+            return await _repo.GetByTitle(title);
         }
 
         Task<Course> ICourseService.AddCourse(CreateCourseDto dto)

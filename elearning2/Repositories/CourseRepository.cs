@@ -17,9 +17,10 @@ namespace elearning2.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public Task DeleteCourse(Course course)
+        public async Task DeleteCourse(Course course)
         {
-            throw new NotImplementedException();
+            _db.Courses.Remove(course);
+            await _db.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Course>> GetAll()

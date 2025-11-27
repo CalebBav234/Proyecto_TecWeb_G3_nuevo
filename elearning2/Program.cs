@@ -140,11 +140,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
 }
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
-}
+//using (var scope = app.Services.CreateScope())
+//{
+    //var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    //db.Database.Migrate();
+//}
 app.UseCors("AllowAll");
 app.UseRateLimiter();
 app.UseAuthentication();

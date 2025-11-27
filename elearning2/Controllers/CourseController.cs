@@ -9,7 +9,6 @@ namespace elearning2.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class CourseController : ControllerBase
     {
         private readonly ICourseService _courseService;
@@ -19,6 +18,7 @@ namespace elearning2.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllCourses()
         {
            IEnumerable<Course> courses = await _courseService.GetAllCourses();
@@ -27,6 +27,7 @@ namespace elearning2.Controllers
 
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetById(Guid id)
         {
             var course = await _courseService.GetById(id);
@@ -36,6 +37,7 @@ namespace elearning2.Controllers
 
 
         [HttpGet("title/{title}")]
+        [Authorize]
         public async Task<IActionResult> GetByTitle(string title)
         {
             var course =  await _courseService.GetByTitle(title);
@@ -45,6 +47,7 @@ namespace elearning2.Controllers
 
 
         [HttpGet("teacher/{teacherId}")]
+        [Authorize]
         public async Task<IActionResult> GetByTeacher(Guid teacherId)
         {
             var courses = await _courseService.GetByTeacher(teacherId);

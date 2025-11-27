@@ -28,14 +28,7 @@ namespace elearning2.Services
 
         public async Task<Course?> GetById(Guid courseId)
         {
-            try
-            {
-                return await _repo.GetById(courseId);
-            }
-            catch
-            {
-                return null;
-            }
+            return await _repo.GetById(courseId);
         }
 
         public Task<IEnumerable<Course>> GetByTeacher(Guid teacherId)

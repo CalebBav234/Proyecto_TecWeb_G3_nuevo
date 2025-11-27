@@ -6,6 +6,11 @@ namespace elearning2.Services
 {
     public class CourseService : ICourseService
     {
+        private readonly ICourseService _repo;
+        public CourseService(ICourseService repo)
+        {
+            _repo = repo;
+        }
         public Task<Course> AddCourse(Course course)
         {
             throw new NotImplementedException();

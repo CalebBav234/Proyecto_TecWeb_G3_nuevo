@@ -26,9 +26,16 @@ namespace elearning2.Services
             return await _repo.GetAllCourses();
         }
 
-        public Task<Course?> GetById(Guid courseId)
+        public async Task<Course?> GetById(Guid courseId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _repo.GetById(courseId);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public Task<IEnumerable<Course>> GetByTeacher(Guid teacherId)

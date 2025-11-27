@@ -22,5 +22,14 @@ namespace elearning2.Controllers
            IEnumerable<Course> courses = await _courseService.GetAllCourses();
             return Ok(courses);
         }
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var course = await _courseService.GetById(id);
+            if (course == null) return NotFound();
+            
+        }
     }
 }

@@ -38,9 +38,9 @@ namespace elearning2.Repositories
             return await _db.Courses.Where(c => c.TeacherId == teacherId).ToListAsync();
         }
 
-        public Task<Course?> GetByTitle(string title)
+        public async Task<Course?> GetByTitle(string title)
         {
-            throw new NotImplementedException();
+            return await _db.Courses.FirstOrDefaultAsync(c => c.Title == title);
         }
 
         public Task UpdateCourse(Course course)

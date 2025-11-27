@@ -22,9 +22,9 @@ namespace elearning2.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Course>> GetAll()
+        public async Task<IEnumerable<Course>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _db.Courses.ToListAsync();
         }
 
         public Task<Course?> GetById(Guid courseId)
